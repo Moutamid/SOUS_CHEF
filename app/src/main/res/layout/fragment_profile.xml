@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey"
+    android:fillViewport="true"
+    tools:context=".fragments.ProfileFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="15dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profilePic"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/profile_icon"
+            app:civ_border_color="@color/black"
+            app:civ_border_width="1dp" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            tools:text="Suleman Ijaz" />
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Update Profile"
+                android:gravity="start|center"
+                app:cornerRadius="12dp"
+                app:icon="@drawable/arrow_right"
+                app:iconGravity="end"
+                android:id="@+id/update" />
+        
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Allow Notifications"
+            android:id="@+id/notifications"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Privacy Policy"
+            android:gravity="start|center"
+            app:cornerRadius="12dp"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            app:iconTint="@color/black"
+            app:icon="@drawable/arrow_right"
+            app:iconGravity="end"
+            android:id="@+id/privacy" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Rate App"
+            android:gravity="start|center"
+            app:cornerRadius="12dp"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            app:iconTint="@color/black"
+            app:icon="@drawable/arrow_right"
+            app:iconGravity="end"
+            android:id="@+id/rate" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Logout"
+            android:gravity="start|center"
+            app:cornerRadius="12dp"
+            android:backgroundTint="@color/red"
+            app:icon="@drawable/arrow_right"
+            app:iconGravity="end"
+            android:id="@+id/logout" />
+
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
