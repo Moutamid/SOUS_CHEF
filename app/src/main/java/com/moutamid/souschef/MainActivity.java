@@ -27,9 +27,9 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView = binding.bottomNav;
 
-        bottomNavigationView.setItemActiveIndicatorColor(ColorStateList.valueOf(getResources().getColor(R.color.greenLight)));
-        bottomNavigationView.setItemActiveIndicatorWidth(100);
-        bottomNavigationView.setItemActiveIndicatorHeight(100);
+        bottomNavigationView.setItemActiveIndicatorColor(ColorStateList.valueOf(getResources().getColor(R.color.greenLight2)));
+//        bottomNavigationView.setItemActiveIndicatorWidth(100);
+//        bottomNavigationView.setItemActiveIndicatorHeight(100);
         bottomNavigationView.setSelectedItemId(R.id.home);
         getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new HomeFragment()).commit();
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.moutamid.souschef.models.GroceryModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,6 +28,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -36,6 +38,9 @@ public class Constants {
     public static final String USER = "USER";
     public static final String NOTIFICATIONS = "NOTIFICATIONS";
     public static final String STASH_USER = "STASH_USER";
+    public static final String WEEK_MEAL = "WEEK_MEAL";
+    public static final String GROCERY = "GROCERY";
+    public static final String PANTRY = "PANTRY";
 
     public static void initDialog(Context context) {
         dialog = new Dialog(context);
@@ -51,6 +56,54 @@ public class Constants {
 
     public static void dismissDialog() {
         dialog.dismiss();
+    }
+
+    public static double addQuantities(String quantity1, String quantity2) {
+        // Extract numeric values
+        double value1 = parseQuantity(quantity1);
+        double value2 = parseQuantity(quantity2);
+
+        // Add the values and return the result
+        return value1 + value2;
+    }
+
+    public static double parseQuantity(String quantity) {
+        String[] parts = quantity.split(" ");
+        if (parts.length > 1) {
+            String[] fractionParts = parts[0].split("/");
+            if (fractionParts.length == 2) {
+                double numerator = Double.parseDouble(fractionParts[0]);
+                double denominator = Double.parseDouble(fractionParts[1]);
+                return numerator / denominator;
+            } else {
+                try {
+                    return Double.parseDouble(parts[0]);
+                } catch (NumberFormatException e) {
+                    return 0.0;
+                }
+            }
+        } else {
+            try {
+                return Double.parseDouble(parts[0]);
+            } catch (NumberFormatException e) {
+                return 0.0;
+            }
+        }
+    }
+
+    public static String getUnit(ArrayList<GroceryModel> list, String itemName) {
+        try {
+            for (GroceryModel item : list) {
+                if (item.ingredient.equals(itemName)) {
+                    if (!item.quantity.split(" ")[1].isEmpty()) {
+                        return item.quantity.split(" ")[1];
+                    }
+                }
+            }
+        } catch (ArrayIndexOutOfBoundsException e){
+            e.printStackTrace();
+        }
+        return "";
     }
 
 

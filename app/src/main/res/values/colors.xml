@@ -5,6 +5,7 @@
     <color name="grey">#EFEDED</color>
     <color name="green">#14AE5C</color>
     <color name="greenLight">#34CE7C</color>
+    <color name="greenLight2">#B0E4C8</color>
     <color name="text">#757575</color>
     <color name="red">#F44336</color>
 </resources>

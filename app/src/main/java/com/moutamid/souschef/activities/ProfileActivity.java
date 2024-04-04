@@ -1,17 +1,16 @@
 package com.moutamid.souschef.activities;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.bumptech.glide.Glide;
 import com.fxn.stash.Stash;
 import com.moutamid.souschef.Constants;
-import com.moutamid.souschef.MainActivity;
 import com.moutamid.souschef.R;
 import com.moutamid.souschef.databinding.ActivityProfileBinding;
 import com.moutamid.souschef.models.UserModel;
@@ -19,13 +18,13 @@ import com.moutamid.souschef.models.UserModel;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.UUID;
 
 public class ProfileActivity extends AppCompatActivity {
     ActivityProfileBinding binding;
     private static final int PICK_FROM_GALLERY = 1001;
     Uri image;
     UserModel userModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,15 +34,16 @@ public class ProfileActivity extends AppCompatActivity {
         userModel = (UserModel) Stash.getObject(Constants.STASH_USER, UserModel.class);
         Glide.with(this).load(userModel.image).placeholder(R.drawable.profile_icon).into(binding.profilePic);
 
-        binding.toolbar.back.setOnClickListener(v-> finish());
+        binding.toolbar.back.setOnClickListener(v -> finish());
 
         binding.firstName.getEditText().setText(userModel.firstName);
         binding.lastName.getEditText().setText(userModel.lastName);
         binding.email.getEditText().setText(userModel.email);
 
         binding.update.setOnClickListener(v -> {
-            if (valid()){
-                if (image == null){
+            if (valid()) {
+                Constants.showDialog();
+                if (image == null) {
                     updateProfile(userModel.image);
                 } else {
                     uploadImage();
@@ -62,10 +62,10 @@ public class ProfileActivity extends AppCompatActivity {
                 .putFile(image)
                 .addOnSuccessListener(taskSnapshot -> {
                     taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(uri -> {
-                       updateProfile(uri.toString());
+                        updateProfile(uri.toString());
                     });
                 }).addOnFailureListener(e -> {
-                   Constants.dismissDialog();
+                    Constants.dismissDialog();
                     Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 });
     }

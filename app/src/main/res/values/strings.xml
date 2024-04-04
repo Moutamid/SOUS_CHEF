@@ -2,4 +2,89 @@
     <string name="app_name">SOUS CHEF</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="pantry_items">
+        <item>Almond milk</item>
+        <item>Avocado oil</item>
+        <item>Bacon</item>
+        <item>Baking powder</item>
+        <item>Baking soda</item>
+        <item>Bread</item>
+        <item>Butter</item>
+        <item>Carrots</item>
+        <item>Cauliflower</item>
+        <item>Celery</item>
+        <item>Cereal</item>
+        <item>Cheese</item>
+        <item>Coconut sugar</item>
+        <item>Chicken breasts</item>
+        <item>Chocolate chips</item>
+        <item>Corn</item>
+        <item>Cucumbers</item>
+        <item>Eggs</item>
+        <item>Elbow macaroni</item>
+        <item>Fettuccine</item>
+        <item>Fish sauce</item>
+        <item>Flour</item>
+        <item>Grapes</item>
+        <item>Green beans</item>
+        <item>Ground beef</item>
+        <item>Honey</item>
+        <item>Hot cocoa mix</item>
+        <item>Hot sauce</item>
+        <item>Instant noodles</item>
+        <item>Instant rice</item>
+        <item>Jam</item>
+        <item>Ketchup</item>
+        <item>Lemonade mix</item>
+        <item>Lemons</item>
+        <item>Lentils</item>
+        <item>Lettuce</item>
+        <item>Linguine</item>
+        <item>Maple syrup</item>
+        <item>Mangoes</item>
+        <item>Milk</item>
+        <item>Mirin</item>
+        <item>Miso paste</item>
+        <item>Mushrooms</item>
+        <item>Mustard</item>
+        <item>Nuts</item>
+        <item>Oats</item>
+        <item>Olive oil</item>
+        <item>Olives</item>
+        <item>Onions</item>
+        <item>Oranges</item>
+        <item>Pasta</item>
+        <item>Peanut butter</item>
+        <item>Pineapple</item>
+        <item>Peas</item>
+        <item>Peppers (bell)</item>
+        <item>Pork chops</item>
+        <item>Potatoes</item>
+        <item>Quinoa</item>
+        <item>Rice</item>
+        <item>Rotini</item>
+        <item>Salt</item>
+        <item>Sesame oil</item>
+        <item>Sesame seeds</item>
+        <item>Spaghetti</item>
+        <item>Spinach</item>
+        <item>Strawberries</item>
+        <item>Sugar</item>
+        <item>Sweet potatoes</item>
+        <item>Tea</item>
+        <item>Tahini</item>
+        <item>Tomato paste</item>
+        <item>Tomato sauce</item>
+        <item>Tomatoes</item>
+        <item>Turkey (deli slices)</item>
+        <item>Vinegar</item>
+        <item>Walnut oil</item>
+        <item>Watermelon</item>
+        <item>Whole wheat pasta</item>
+        <item>Yogurt</item>
+        <item>Zucchini</item>
+    </string-array>
+
+
 </resources>

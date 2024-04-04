@@ -5,16 +5,24 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.fxn.stash.Stash;
 import com.moutamid.souschef.Constants;
-import com.moutamid.souschef.R;
+import com.moutamid.souschef.adapters.WeekMealAdapter;
+import com.moutamid.souschef.databinding.FragmentMealPrepBinding;
+import com.moutamid.souschef.listeners.WeekMealListener;
+import com.moutamid.souschef.models.WeekMeal;
+
+import java.util.ArrayList;
 
 public class MealPrepFragment extends Fragment {
-
+    FragmentMealPrepBinding binding;
     Context context;
 
     @Override
@@ -36,9 +44,18 @@ public class MealPrepFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_meal_prep, container, false);
+        binding = FragmentMealPrepBinding.inflate(getLayoutInflater(), container, false);
+
+        binding.weekRC.setLayoutManager(new LinearLayoutManager(context));
+        binding.weekRC.setHasFixedSize(true);
+
+        ArrayList<WeekMeal> list = Stash.getArrayList(Constants.WEEK_MEAL, WeekMeal.class);
+        WeekMealAdapter adapter = new WeekMealAdapter(context, list, true, (model, pos) -> {
+
+        });
+        binding.weekRC.setAdapter(adapter);
+        return binding.getRoot();
     }
 }
