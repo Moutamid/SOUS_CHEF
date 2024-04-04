@@ -10,13 +10,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.fxn.stash.Stash;
 import com.moutamid.souschef.Constants;
 import com.moutamid.souschef.adapters.WeekMealAdapter;
 import com.moutamid.souschef.databinding.FragmentMealPrepBinding;
-import com.moutamid.souschef.listeners.WeekMealListener;
+import com.moutamid.souschef.listeners.BottomSheetDismissListener;
 import com.moutamid.souschef.models.WeekMeal;
 
 import java.util.ArrayList;
@@ -51,11 +50,20 @@ public class MealPrepFragment extends Fragment {
         binding.weekRC.setLayoutManager(new LinearLayoutManager(context));
         binding.weekRC.setHasFixedSize(true);
 
+        update();
+
+        return binding.getRoot();
+    }
+
+    private void update() {
         ArrayList<WeekMeal> list = Stash.getArrayList(Constants.WEEK_MEAL, WeekMeal.class);
         WeekMealAdapter adapter = new WeekMealAdapter(context, list, true, (model, pos) -> {
+            AddMeal bottomSheetFragment = new AddMeal(model, pos);
+            bottomSheetFragment.setListener(() -> {
 
+            });
+            bottomSheetFragment.show(getChildFragmentManager(), bottomSheetFragment.getTag());
         });
         binding.weekRC.setAdapter(adapter);
-        return binding.getRoot();
     }
 }
