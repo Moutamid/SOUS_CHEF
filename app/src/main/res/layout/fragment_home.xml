@@ -1,35 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/grey"
     tools:context=".fragments.HomeFragment">
 
-    <TextView
-        android:id="@+id/title"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:text="Home"
-        android:textColor="@color/black"
-        android:textSize="26sp" />
+        android:layout_height="match_parent"
+        android:background="@color/grey">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="16dp"
-        android:layout_below="@id/title"
-        android:layout_marginHorizontal="15dp"
-        app:cardElevation="0dp">
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:text="Home"
+            android:textColor="@color/black"
+            android:textSize="26sp" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/calender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            android:layout_below="@id/title"
+            android:layout_marginHorizontal="15dp"
+            app:cardElevation="0dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/weekRC"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/week_meal" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/titleSugs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:layout_below="@id/calender"
+            android:text="Suggestions"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/weekRC"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/week_meal" />
+            android:layout_below="@id/titleSugs"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            tools:listitem="@layout/meal_item"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:id="@+id/mealRC" />
 
-    </androidx.cardview.widget.CardView>
-
-</RelativeLayout>
+    </RelativeLayout>
+</androidx.core.widget.NestedScrollView>

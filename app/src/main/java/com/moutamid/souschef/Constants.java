@@ -3,15 +3,11 @@ package com.moutamid.souschef;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
-import android.provider.OpenableColumns;
 import android.view.Window;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.fxn.stash.Stash;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -27,10 +23,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Objects;
 
 public class Constants {
 
@@ -41,6 +34,7 @@ public class Constants {
     public static final String WEEK_MEAL = "WEEK_MEAL";
     public static final String GROCERY = "GROCERY";
     public static final String PANTRY = "PANTRY";
+    public static final String SUGGESTED_MEAL = "SUGGESTED_MEAL";
 
     public static void initDialog(Context context) {
         dialog = new Dialog(context);

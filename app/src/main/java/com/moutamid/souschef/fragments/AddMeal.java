@@ -34,8 +34,6 @@ public class AddMeal extends BottomSheetDialogFragment {
             dismiss();
         });
 
-
-
         return binding.getRoot();
     }
 

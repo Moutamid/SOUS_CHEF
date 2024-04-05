@@ -13,10 +13,10 @@ import android.view.ViewGroup;
 
 import com.fxn.stash.Stash;
 import com.moutamid.souschef.Constants;
-import com.moutamid.souschef.R;
+import com.moutamid.souschef.adapters.MealAdapter;
 import com.moutamid.souschef.adapters.WeekMealAdapter;
 import com.moutamid.souschef.databinding.FragmentHomeBinding;
-import com.moutamid.souschef.listeners.WeekMealListener;
+import com.moutamid.souschef.models.MealModel;
 import com.moutamid.souschef.models.WeekMeal;
 
 import java.util.ArrayList;
@@ -64,7 +64,20 @@ public class HomeFragment extends Fragment {
         WeekMealAdapter adapter = new WeekMealAdapter(context, list, false, null);
         binding.weekRC.setAdapter(adapter);
 
+        ArrayList<MealModel> mealList = Stash.getArrayList(Constants.SUGGESTED_MEAL, MealModel.class);
+        if (mealList.size() == 0){
+            mealList = getMeal();
+            Stash.put(Constants.SUGGESTED_MEAL, mealList);
+        }
+        MealAdapter mealAdapter = new MealAdapter(context, mealList);
+        binding.mealRC.setAdapter(mealAdapter);
+
         return binding.getRoot();
+    }
+
+    private ArrayList<MealModel> getMeal() {
+        ArrayList<MealModel> mealList = new ArrayList<>();
+        return mealList;
     }
 
     @Override

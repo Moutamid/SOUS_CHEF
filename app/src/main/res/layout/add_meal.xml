@@ -32,4 +32,31 @@
 
     </com.google.android.material.card.MaterialCardView>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ingredient"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="Search Meal"
+        android:layout_below="@id/close"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusTopStart="12dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ingredientsList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/ingredient"
+        android:layout_marginTop="10dp"
+        android:id="@+id/mealRC" />
+
 </RelativeLayout>
