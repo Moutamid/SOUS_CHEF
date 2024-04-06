@@ -51,19 +51,7 @@ public class ListFragment extends Fragment {
         binding.pantryRC.setLayoutManager(new LinearLayoutManager(context));
         binding.pantryRC.setHasFixedSize(false);
 
-//        Stash.clear(Constants.GROCERY);
-//        Stash.clear(Constants.PANTRY);
-
         ArrayList<GroceryModel> list = Stash.getArrayList(Constants.GROCERY, GroceryModel.class);
-//        if (list.size() == 0) {
-//            list.add(new GroceryModel("Egg", "12"));
-//            list.add(new GroceryModel("Butter", "3 sticks"));
-//            list.add(new GroceryModel("Flour", "5 Kg"));
-//            list.add(new GroceryModel("Flour", "1/2 Kg"));
-//            list.add(new GroceryModel("Sugar", "10 Kg"));
-//            list.add(new GroceryModel("Chicken", "0.5 Kg"));
-//            list.add(new GroceryModel("Flour", "1/2 Kg"));
-//        }
 
         if (list.size() > 0) {
             binding.headers.setVisibility(View.VISIBLE);

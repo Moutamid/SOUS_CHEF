@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class WeekMeal {
     public String day, meal;
-    ArrayList<GroceryModel> grocery;
+    public ArrayList<GroceryModel> grocery;
 
     public WeekMeal() {
     }

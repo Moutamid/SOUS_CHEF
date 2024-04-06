@@ -2,14 +2,14 @@ package com.moutamid.souschef.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.fxn.stash.Stash;
 import com.moutamid.souschef.Constants;
@@ -52,7 +52,7 @@ public class HomeFragment extends Fragment {
         binding.weekRC.setHasFixedSize(true);
 
         ArrayList<WeekMeal> list = Stash.getArrayList(Constants.WEEK_MEAL, WeekMeal.class);
-        if (list.size() == 0){
+        if (list.size() == 0) {
             list.add(new WeekMeal("Monday\t\t\t ", ""));
             list.add(new WeekMeal("Tuesday\t\t\t ", ""));
             list.add(new WeekMeal("Wednesday", ""));
@@ -64,13 +64,15 @@ public class HomeFragment extends Fragment {
         }
         WeekMealAdapter adapter = new WeekMealAdapter(context, list, false, null);
         binding.weekRC.setAdapter(adapter);
-
+//        Stash.clear(Constants.SUGGESTED_MEAL);
         ArrayList<MealModel> mealList = Stash.getArrayList(Constants.SUGGESTED_MEAL, MealModel.class);
-        if (mealList.size() == 0){
+        if (mealList.size() == 0) {
             mealList = getMeal();
             Stash.put(Constants.SUGGESTED_MEAL, mealList);
         }
-        MealAdapter mealAdapter = new MealAdapter(context, mealList);
+        binding.mealRC.setLayoutManager(new GridLayoutManager(requireContext(), 2));
+        binding.mealRC.setHasFixedSize(true);
+        MealAdapter mealAdapter = new MealAdapter(context, mealList, null);
         binding.mealRC.setAdapter(mealAdapter);
 
         return binding.getRoot();
@@ -80,17 +82,23 @@ public class HomeFragment extends Fragment {
         ArrayList<MealModel> mealList = new ArrayList<>();
 
 // 1. Spaghetti Bolognese
-        MealModel spaghettiBolognese = new MealModel();
-        spaghettiBolognese.name = "Spaghetti Bolognese";
-        spaghettiBolognese.image = "https://www.slimmingeats.com/blog/wp-content/uploads/2010/04/spaghetti-bolognese-36-720x720.jpg"; // Replace with image URL if available
-        spaghettiBolognese.how_to_cook = "Sauté ground beef with onion and garlic. Add tomato sauce, Italian seasoning, and simmer. Cook spaghetti according to package directions. Serve with sauce and grated Parmesan cheese (optional).";
-        ArrayList<GroceryModel> spaghettiIngredients = new ArrayList<>();
-        spaghettiIngredients.add(new GroceryModel("Ground beef or turkey", "500g"));
-        spaghettiIngredients.add(new GroceryModel("Tomato sauce", "1 (28-ounce) can"));
-        spaghettiIngredients.add(new GroceryModel("Onion", "1 medium"));
-        spaghettiIngredients.add(new GroceryModel("Garlic", "2 cloves"));
-        spaghettiBolognese.ingredients = spaghettiIngredients;
-        mealList.add(spaghettiBolognese);
+        MealModel bologneseModel = new MealModel();
+        bologneseModel.name = "Spaghetti Bolognese";
+        bologneseModel.image = "https://www.slimmingeats.com/blog/wp-content/uploads/2010/04/spaghetti-bolognese-36-720x720.jpg"; // Replace with actual image link
+        bologneseModel.how_to_cook = "Sauté onion and garlic in olive oil. Brown ground beef or turkey. Add tomato sauce, Italian seasoning, salt, and pepper. Simmer for at least 30 minutes, allowing flavors to develop. Cook spaghetti according to package directions. Serve bolognese sauce over cooked spaghetti. Top with grated Parmesan cheese (optional).";
+        ArrayList<GroceryModel> bologneseIngredients = new ArrayList<>();
+        bologneseIngredients.add(new GroceryModel("Spaghetti pasta", "1 pound"));
+        bologneseIngredients.add(new GroceryModel("Ground beef or turkey", "1 pound"));
+        bologneseIngredients.add(new GroceryModel("Tomato sauce", "28 oz"));
+        bologneseIngredients.add(new GroceryModel("Onion", "1 medium"));
+        bologneseIngredients.add(new GroceryModel("Garlic", "2 cloves"));
+        bologneseIngredients.add(new GroceryModel("Olive oil", "2 tablespoons"));
+        bologneseIngredients.add(new GroceryModel("Salt", "To taste"));
+        bologneseIngredients.add(new GroceryModel("Black pepper", "1 tablespoons"));
+        bologneseIngredients.add(new GroceryModel("Italian seasoning", "1 tablespoon"));
+        bologneseIngredients.add(new GroceryModel("Parmesan cheese (optional for topping)", " 2 oz"));
+        bologneseModel.ingredients = bologneseIngredients;
+        mealList.add(bologneseModel);
 
 // 2. Chicken Stir-Fry
         MealModel chickenStirFry = new MealModel();
@@ -98,13 +106,13 @@ public class HomeFragment extends Fragment {
         chickenStirFry.image = "https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2021/05/Chicken-Stir-Fry-main-1.jpg"; // Replace with image URL if available
         chickenStirFry.how_to_cook = "Marinate sliced chicken in soy sauce, garlic, and ginger. Stir-fry vegetables until tender-crisp. Add chicken and cook until browned through. Thicken sauce with cornstarch if desired. Serve with rice or noodles (optional).";
         ArrayList<GroceryModel> chickenStirFryIngredients = new ArrayList<>();
-        chickenStirFryIngredients.add(new GroceryModel("Chicken breast or thighs", "1 pound, boneless, skinless, sliced"));
-        chickenStirFryIngredients.add(new GroceryModel("Mixed vegetables", "1 bag (your preferred mix)"));
+        chickenStirFryIngredients.add(new GroceryModel("Chicken breast or thighs", "1 pound"));
+        chickenStirFryIngredients.add(new GroceryModel("Mixed vegetables", "1 bag"));
         chickenStirFryIngredients.add(new GroceryModel("Soy sauce", "3 tablespoons"));
-        chickenStirFryIngredients.add(new GroceryModel("Garlic", "2 cloves, minced"));
-        chickenStirFryIngredients.add(new GroceryModel("Ginger", "1 tablespoon, minced"));
+        chickenStirFryIngredients.add(new GroceryModel("Garlic", "2 cloves"));
+        chickenStirFryIngredients.add(new GroceryModel("Ginger", "1 tablespoon"));
         chickenStirFryIngredients.add(new GroceryModel("Olive oil or sesame oil", "1 tablespoon"));
-        chickenStirFryIngredients.add(new GroceryModel("Cornstarch", "1 tablespoon, mixed with 2 tablespoons water (optional)"));
+        chickenStirFryIngredients.add(new GroceryModel("Cornstarch", "1 tablespoon"));
         chickenStirFry.ingredients = chickenStirFryIngredients;
         mealList.add(chickenStirFry);
 
@@ -116,15 +124,74 @@ public class HomeFragment extends Fragment {
         ArrayList<GroceryModel> bakedSalmonIngredients = new ArrayList<>();
         bakedSalmonIngredients.add(new GroceryModel("Salmon fillets", "2"));
         bakedSalmonIngredients.add(new GroceryModel("Lemon", "1"));
-        bakedSalmonIngredients.add(new GroceryModel("Garlic", "2 cloves, minced"));
+        bakedSalmonIngredients.add(new GroceryModel("Garlic", "2 cloves"));
         bakedSalmonIngredients.add(new GroceryModel("Olive oil", "2 tablespoons"));
-        bakedSalmonIngredients.add(new GroceryModel("Salt", "To taste"));
-        bakedSalmonIngredients.add(new GroceryModel("Black pepper", "To taste"));
-        bakedSalmonIngredients.add(new GroceryModel("Fresh dill", "Optional"));
-        bakedSalmonIngredients.add(new GroceryModel("Honey", "Optional, for a honey-glazed finish"));
-        bakedSalmonIngredients.add(new GroceryModel("Asparagus", "Optional, or other preferred vegetables"));
+        bakedSalmonIngredients.add(new GroceryModel("Salt", "1 tablespoons"));
+        bakedSalmonIngredients.add(new GroceryModel("Black pepper", "1 tablespoons"));
+        bakedSalmonIngredients.add(new GroceryModel("Fresh dill", "1"));
+        bakedSalmonIngredients.add(new GroceryModel("Honey", "1 tablespoons"));
+        bakedSalmonIngredients.add(new GroceryModel("Asparagus", "1"));
         bakedSalmon.ingredients = bakedSalmonIngredients;
         mealList.add(bakedSalmon);
+
+        MealModel chiliModel = new MealModel();
+        chiliModel.name = "Vegetarian Chili";
+        chiliModel.image = "https://www.ambitiouskitchen.com/wp-content/uploads/2020/01/The-Best-Vegetarian-Chili-4-725x725-1.jpg"; // Replace with actual image link
+        chiliModel.how_to_cook = "Sauté onion, bell peppers, and garlic in olive oil. Add spices like chili powder, cumin, and paprika. Simmer with diced tomatoes, vegetable broth, kidney beans, black beans, and corn. Top with avocado and sour cream for a delicious and hearty vegetarian meal.";
+        ArrayList<GroceryModel> chiliIngredients = new ArrayList<>();
+        chiliIngredients.add(new GroceryModel("Kidney beans", "1 can"));
+        chiliIngredients.add(new GroceryModel("Black beans", "1 can"));
+        chiliIngredients.add(new GroceryModel("Diced tomatoes (canned)", "1 can"));
+        chiliIngredients.add(new GroceryModel("Onion", "1 medium"));
+        chiliIngredients.add(new GroceryModel("Bell peppers", "2"));
+        chiliIngredients.add(new GroceryModel("Garlic", "3 cloves"));
+        chiliIngredients.add(new GroceryModel("Chili powder", "2 tablespoons"));
+        chiliIngredients.add(new GroceryModel("Cumin", "1 teaspoon"));
+        chiliIngredients.add(new GroceryModel("Paprika", "1.5 teaspoons"));
+        chiliIngredients.add(new GroceryModel("Salt", "½ teaspoon"));
+        chiliIngredients.add(new GroceryModel("Black pepper", "1 tablespoons"));
+        chiliIngredients.add(new GroceryModel("Olive oil", "2 tablespoons"));
+        chiliIngredients.add(new GroceryModel("Vegetable broth", "2 cups"));
+        chiliIngredients.add(new GroceryModel("Corn (canned or frozen)", "1 cup"));
+        chiliIngredients.add(new GroceryModel("Avocado", "1"));
+        chiliIngredients.add(new GroceryModel("Sour cream", "1"));
+        chiliModel.ingredients = chiliIngredients;
+        mealList.add(chiliModel);
+
+        MealModel tacoModel = new MealModel();
+        tacoModel.name = "Beef Tacos";
+        tacoModel.image = "https://danosseasoning.com/wp-content/uploads/2022/03/Beef-Tacos-768x575.jpg"; // Replace with actual image link
+        tacoModel.how_to_cook = "Brown ground beef in a skillet. Drain fat and stir in taco seasoning mix. Warm taco shells according to package directions. Fill tortillas with beef, lettuce, chopped tomato, onion, shredded cheese, salsa, sour cream, and avocado slices. Enjoy!";
+        ArrayList<GroceryModel> tacoIngredients = new ArrayList<>();
+        tacoIngredients.add(new GroceryModel("Ground beef", "1 pound"));
+        tacoIngredients.add(new GroceryModel("Taco seasoning mix", "1 packet"));
+        tacoIngredients.add(new GroceryModel("Taco shells", "12-18 shells"));
+        tacoIngredients.add(new GroceryModel("Lettuce", "1"));
+        tacoIngredients.add(new GroceryModel("Tomato", "1 medium"));
+        tacoIngredients.add(new GroceryModel("Onion", "0.5 onion"));
+        tacoIngredients.add(new GroceryModel("Cheese", "1"));
+        tacoIngredients.add(new GroceryModel("Salsa", "1"));
+        tacoIngredients.add(new GroceryModel("Sour cream", "1"));
+        tacoIngredients.add(new GroceryModel("Avocado", "1"));
+        tacoModel.ingredients = tacoIngredients;
+        mealList.add(tacoModel);
+
+        MealModel stirFryModel = new MealModel();
+        stirFryModel.name = "Vegetable Stir-Fry with Chicken and Rice";
+        stirFryModel.image = "https://cdn.sunbasket.com/3092365c-5b6c-4506-8de5-388fbf8877c1.jpeg"; // Replace with actual image link
+        stirFryModel.how_to_cook = "Prepare cooked chicken (grilled, baked, etc.) beforehand. Heat olive oil in a wok or large skillet. Stir-fry bell peppers, garlic, and ginger until softened. Add soy sauce, salt, and black pepper. Add cooked chicken and stir-fry until heated through. Serve over cooked rice.";
+        ArrayList<GroceryModel> stirFryIngredients = new ArrayList<>();
+        stirFryIngredients.add(new GroceryModel("Bell peppers", "2"));
+        stirFryIngredients.add(new GroceryModel("Garlic", "2 cloves"));
+        stirFryIngredients.add(new GroceryModel("Ginger", "1 tablespoon"));
+        stirFryIngredients.add(new GroceryModel("Soy sauce", "2 tablespoons"));
+        stirFryIngredients.add(new GroceryModel("Olive oil", "1 tablespoon"));
+        stirFryIngredients.add(new GroceryModel("Salt", "1 tablespoons"));
+        stirFryIngredients.add(new GroceryModel("Black pepper", "1 tablespoons"));
+        stirFryIngredients.add(new GroceryModel("Cooked chicken", "2 cups"));
+        stirFryIngredients.add(new GroceryModel("Rice", "1 cup"));
+        stirFryModel.ingredients = stirFryIngredients;
+        mealList.add(stirFryModel);
 
         return mealList;
     }

@@ -1,11 +1,15 @@
 package com.moutamid.souschef;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.view.Window;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,7 +38,23 @@ public class Constants {
     public static final String WEEK_MEAL = "WEEK_MEAL";
     public static final String GROCERY = "GROCERY";
     public static final String PANTRY = "PANTRY";
+    public static final String LAST_TIME = "LAST_TIME";
     public static final String SUGGESTED_MEAL = "SUGGESTED_MEAL";
+    public static final String NOTIFICATION_TYPE = "NOTIFICATION_TYPE   ";
+
+    public enum Notification_Type {DAILY, REVIEW}
+
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
+    public static final String[] permissions13 = {
+            Manifest.permission.POST_NOTIFICATIONS,
+            android.Manifest.permission.SCHEDULE_EXACT_ALARM,
+            android.Manifest.permission.USE_EXACT_ALARM
+    };
+
+    @RequiresApi(api = Build.VERSION_CODES.S)
+    public static final String[] permissions = {
+            android.Manifest.permission.SCHEDULE_EXACT_ALARM,
+    };
 
     public static void initDialog(Context context) {
         dialog = new Dialog(context);
@@ -94,7 +114,7 @@ public class Constants {
                     }
                 }
             }
-        } catch (ArrayIndexOutOfBoundsException e){
+        } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
         }
         return "";
@@ -161,6 +181,7 @@ public class Constants {
     public static FirebaseAuth auth() {
         return FirebaseAuth.getInstance();
     }
+
     public static DatabaseReference databaseReference() {
         DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("souschef");
         db.keepSynced(true);

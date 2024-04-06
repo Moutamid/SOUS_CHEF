@@ -10,12 +10,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.fxn.stash.Stash;
 import com.moutamid.souschef.Constants;
 import com.moutamid.souschef.adapters.WeekMealAdapter;
 import com.moutamid.souschef.databinding.FragmentMealPrepBinding;
 import com.moutamid.souschef.listeners.BottomSheetDismissListener;
+import com.moutamid.souschef.models.GroceryModel;
 import com.moutamid.souschef.models.WeekMeal;
 
 import java.util.ArrayList;
@@ -52,6 +54,16 @@ public class MealPrepFragment extends Fragment {
 
         update();
 
+        binding.generate.setOnClickListener(v -> {
+            ArrayList<WeekMeal> week = Stash.getArrayList(Constants.WEEK_MEAL, WeekMeal.class);
+            ArrayList<GroceryModel> grocery = Stash.getArrayList(Constants.GROCERY, GroceryModel.class);
+            for (WeekMeal mo : week){
+                grocery.addAll(mo.grocery);
+            }
+            Stash.put(Constants.GROCERY, grocery);
+            Toast.makeText(context, "Grocery List Generated", Toast.LENGTH_SHORT).show();
+        });
+
         return binding.getRoot();
     }
 
@@ -60,7 +72,7 @@ public class MealPrepFragment extends Fragment {
         WeekMealAdapter adapter = new WeekMealAdapter(context, list, true, (model, pos) -> {
             AddMeal bottomSheetFragment = new AddMeal(model, pos);
             bottomSheetFragment.setListener(() -> {
-
+                update();
             });
             bottomSheetFragment.show(getChildFragmentManager(), bottomSheetFragment.getTag());
         });

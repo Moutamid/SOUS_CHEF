@@ -54,9 +54,7 @@
             android:layout_below="@id/titleSugs"
             android:layout_marginHorizontal="15dp"
             android:layout_marginBottom="10dp"
-            android:orientation="horizontal"
             tools:listitem="@layout/meal_item"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:id="@+id/mealRC" />
 
     </RelativeLayout>

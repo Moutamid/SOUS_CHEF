@@ -2,6 +2,8 @@ package com.moutamid.souschef.fragments;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +11,20 @@ import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
 
+import com.fxn.stash.Stash;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.moutamid.souschef.Constants;
+import com.moutamid.souschef.adapters.MealAdapter;
 import com.moutamid.souschef.databinding.AddMealBinding;
 import com.moutamid.souschef.listeners.BottomSheetDismissListener;
+import com.moutamid.souschef.listeners.MealListener;
+import com.moutamid.souschef.models.MealModel;
 import com.moutamid.souschef.models.WeekMeal;
+
+import java.util.ArrayList;
 
 public class AddMeal extends BottomSheetDialogFragment {
     AddMealBinding binding;
@@ -32,6 +42,38 @@ public class AddMeal extends BottomSheetDialogFragment {
 
         binding.close.setOnClickListener(v -> {
             dismiss();
+        });
+
+        ArrayList<MealModel> mealList = Stash.getArrayList(Constants.SUGGESTED_MEAL, MealModel.class);
+        binding.mealRC.setLayoutManager(new GridLayoutManager(requireContext(), 2));
+        binding.mealRC.setHasFixedSize(true);
+        MealAdapter mealAdapter = new MealAdapter(requireContext(), mealList, new MealListener() {
+            @Override
+            public void onClick(MealModel model) {
+                ArrayList<WeekMeal> list = Stash.getArrayList(Constants.WEEK_MEAL, WeekMeal.class);
+                list.get(pos).grocery = model.ingredients;
+                list.get(pos).meal = model.name;
+                Stash.put(Constants.WEEK_MEAL, list);
+                dismiss();
+            }
+        });
+        binding.mealRC.setAdapter(mealAdapter);
+
+        binding.ingredient.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mealAdapter.getFilter().filter(s);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
         });
 
         return binding.getRoot();
