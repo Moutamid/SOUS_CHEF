@@ -50,7 +50,6 @@ public class NotificationHelper extends ContextWrapper {
     public void sendHighPriorityNotification(String title, String body, Class activityName) {
         Intent intent = new Intent(this, activityName);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 267, intent, PendingIntent.FLAG_IMMUTABLE);//FLAG_UPDATE_CURRENT
-
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle(title)
                 .setSmallIcon(R.mipmap.ic_launcher)

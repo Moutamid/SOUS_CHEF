@@ -1,6 +1,7 @@
 package com.moutamid.souschef.adapters;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,9 +44,15 @@ public class GroceryAdapter extends RecyclerView.Adapter<GroceryAdapter.GroceryV
        // holder.ingredient.setChecked(checkedItems.get(position, false));
         checkedItems.put(position, false);
         holder.ingredient.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked){
+                holder.ingredient.setPaintFlags(holder.ingredient.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                holder.quantity.setPaintFlags(holder.quantity.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            } else {
+                holder.ingredient.setPaintFlags(holder.ingredient.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                holder.quantity.setPaintFlags(holder.quantity.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+            }
             checkedItems.put(position, isChecked);
         });
-
     }
 
     public ArrayList<GroceryModel> getCheckedItems() {

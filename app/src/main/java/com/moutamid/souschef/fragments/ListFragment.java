@@ -1,7 +1,10 @@
 package com.moutamid.souschef.fragments;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +16,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.fxn.stash.Stash;
 import com.moutamid.souschef.Constants;
+import com.moutamid.souschef.MainActivity;
 import com.moutamid.souschef.adapters.GroceryAdapter;
 import com.moutamid.souschef.databinding.FragmentListBinding;
 import com.moutamid.souschef.models.GroceryModel;
+import com.moutamid.souschef.notification.NotificationScheduler;
+import com.moutamid.souschef.notification.RestartBootReceiiver;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -104,6 +111,31 @@ public class ListFragment extends Fragment {
                 Stash.put(Constants.PANTRY, stashPantry);
                 Stash.put(Constants.GROCERY, finalList);
                 Toast.makeText(context, "Items saved in pantry", Toast.LENGTH_SHORT).show();
+                new Thread(() -> {
+                    if (Stash.getBoolean(Constants.IS_FIRST_TIME, true)) {
+                        Stash.put(Constants.IS_FIRST_TIME, false);
+
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTimeInMillis(System.currentTimeMillis());
+
+                        calendar.set(Calendar.HOUR_OF_DAY, 15);
+                        calendar.set(Calendar.MINUTE, 0);
+                        calendar.set(Calendar.SECOND, 0);
+
+                        if (Calendar.getInstance().after(calendar)) {
+                            calendar.add(Calendar.DAY_OF_YEAR, 1);
+                        }
+
+                        NotificationScheduler.scheduleDailyNotification(requireContext(), calendar, false);
+
+                        ComponentName receiver = new ComponentName(requireContext(), RestartBootReceiiver.class);
+                        PackageManager pm = requireContext().getPackageManager();
+
+                        pm.setComponentEnabledSetting(receiver,
+                                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                                PackageManager.DONT_KILL_APP);
+                    }
+                }).start();
             }
         });
 

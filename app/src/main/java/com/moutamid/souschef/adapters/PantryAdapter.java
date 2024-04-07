@@ -5,12 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.moutamid.souschef.R;
+import com.moutamid.souschef.listeners.PantryClick;
 import com.moutamid.souschef.models.GroceryModel;
 
 import java.util.ArrayList;
@@ -18,10 +20,12 @@ import java.util.ArrayList;
 public class PantryAdapter extends RecyclerView.Adapter<PantryAdapter.PantryVH> {
     Context context;
     ArrayList<GroceryModel> list;
+    PantryClick pantryClick;
 
-    public PantryAdapter(Context context, ArrayList<GroceryModel> list) {
+    public PantryAdapter(Context context, ArrayList<GroceryModel> list, PantryClick pantryClick) {
         this.context = context;
         this.list = list;
+        this.pantryClick = pantryClick;
     }
 
     @NonNull
@@ -35,6 +39,14 @@ public class PantryAdapter extends RecyclerView.Adapter<PantryAdapter.PantryVH> 
         GroceryModel model = list.get(holder.getAdapterPosition());
         holder.ingredient.setText(model.ingredient);
         holder.quantity.setText(model.quantity);
+
+        holder.itemView.setOnClickListener(v->{}); // important for item selection highlight UI side
+
+        holder.itemView.setOnLongClickListener(v -> {
+            pantryClick.onClick(model, holder.getAdapterPosition());
+            return false;
+        });
+
     }
 
     @Override

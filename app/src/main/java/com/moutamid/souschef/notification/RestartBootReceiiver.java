@@ -16,7 +16,10 @@ public class RestartBootReceiiver extends BroadcastReceiver {
         if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(Stash.getLong(Constants.LAST_TIME, System.currentTimeMillis()));
-            NotificationScheduler.scheduleDailyNotification(context, calendar);
+            NotificationScheduler.scheduleDailyNotification(context, calendar, false);
+            Calendar calendarDaily = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+            NotificationScheduler.scheduleDailyNotification(context, calendarDaily, true);
         }
     }
 }

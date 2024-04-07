@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.fxn.stash.Stash;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.moutamid.souschef.Constants;
@@ -96,9 +98,53 @@ public class PantryFragment extends Fragment {
         for (Map.Entry<String, Double> entry : mergedItems.entrySet()) {
             finalList.add(new GroceryModel(entry.getKey(), entry.getValue() + " " + Constants.getUnit(list, entry.getKey())));
         }
-
-        PantryAdapter adapter = new PantryAdapter(context, finalList);
+        Stash.put(Constants.PANTRY, finalList);
+        PantryAdapter adapter = new PantryAdapter(context, finalList, this::showDialog);
         binding.pantryRC.setAdapter(adapter);
+    }
+
+    private void showDialog(GroceryModel model, int pos) {
+        Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.pantry_update);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setCancelable(true);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setGravity(Gravity.CENTER);
+        dialog.show();
+
+        MaterialButton update = dialog.findViewById(R.id.update);
+        TextInputLayout quantity = dialog.findViewById(R.id.quantity);
+        MaterialCardView close = dialog.findViewById(R.id.close);
+
+        update.setText("Update " + model.ingredient);
+
+        close.setOnClickListener(v -> {
+            new MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Delete " + model.ingredient)
+                    .setMessage("Are you sure you want to remove this item from pantry?")
+                    .setNegativeButton("No", (dialog1, which) -> dialog1.dismiss())
+                    .setPositiveButton("Yes", (dialog1, which) -> {
+                        dialog1.dismiss();
+                        dialog.dismiss();
+                        ArrayList<GroceryModel> list = Stash.getArrayList(Constants.PANTRY, GroceryModel.class);
+                        list.remove(pos);
+                        Stash.put(Constants.PANTRY, list);
+                        getList();
+                    })
+                    .show();
+        });
+
+        quantity.getEditText().setText(model.quantity);
+
+        update.setOnClickListener(v -> {
+            dialog.dismiss();
+            ArrayList<GroceryModel> list = Stash.getArrayList(Constants.PANTRY, GroceryModel.class);
+            list.get(pos).quantity = quantity.getEditText().getText().toString();
+            Stash.put(Constants.PANTRY, list);
+            getList();
+        });
+
     }
 
     private void showDialog() {

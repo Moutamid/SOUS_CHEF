@@ -32,17 +32,19 @@ import java.util.ArrayList;
 public class Constants {
 
     static Dialog dialog;
+    public static final int HOUR = 8;
     public static final String USER = "USER";
     public static final String NOTIFICATIONS = "NOTIFICATIONS";
     public static final String STASH_USER = "STASH_USER";
     public static final String WEEK_MEAL = "WEEK_MEAL";
+    public static final String IS_FIRST_TIME = "IS_FIRST_TIME";
     public static final String GROCERY = "GROCERY";
     public static final String PANTRY = "PANTRY";
     public static final String LAST_TIME = "LAST_TIME";
     public static final String SUGGESTED_MEAL = "SUGGESTED_MEAL";
-    public static final String NOTIFICATION_TYPE = "NOTIFICATION_TYPE   ";
+    public static final String NOTIFICATION_TYPE = "NOTIFICATION_TYPE";
 
-    public enum Notification_Type {DAILY, REVIEW}
+    public enum Notification_Type {DAILY, FIVE_DAY}
 
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     public static final String[] permissions13 = {
