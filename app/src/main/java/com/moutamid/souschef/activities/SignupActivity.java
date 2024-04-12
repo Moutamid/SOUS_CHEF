@@ -32,18 +32,17 @@ public class SignupActivity extends AppCompatActivity {
         binding.create.setOnClickListener(v -> {
             if (valid()) {
                 Constants.showDialog();
-                UserModel userModel = new UserModel();
-                userModel.ID = UUID.randomUUID().toString();
-                userModel.firstName = binding.firstName.getEditText().getText().toString();
-                userModel.lastName = binding.lastName.getEditText().getText().toString();
-                userModel.email = binding.email.getEditText().getText().toString();
-                userModel.password = binding.password.getEditText().getText().toString();
-                userModel.image = "";
-
                 Constants.auth().createUserWithEmailAndPassword(
                         binding.email.getEditText().getText().toString(),
                         binding.password.getEditText().getText().toString()
                 ).addOnSuccessListener(authResult -> {
+                    UserModel userModel = new UserModel();
+                    userModel.ID = authResult.getUser().getUid();
+                    userModel.firstName = binding.firstName.getEditText().getText().toString();
+                    userModel.lastName = binding.lastName.getEditText().getText().toString();
+                    userModel.email = binding.email.getEditText().getText().toString();
+                    userModel.password = binding.password.getEditText().getText().toString();
+                    userModel.image = "";
                     Constants.databaseReference().child(Constants.USER).child(userModel.ID).setValue(userModel)
                             .addOnSuccessListener(unused -> {
                                 Constants.dismissDialog();

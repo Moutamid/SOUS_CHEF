@@ -81,8 +81,10 @@ public class ProfileFragment extends Fragment {
     public void onResume() {
         super.onResume();
         UserModel userModel = (UserModel) Stash.getObject(Constants.STASH_USER, UserModel.class);
-        Glide.with(context).load(userModel.image).placeholder(R.drawable.profile_icon).into(binding.profilePic);
-        String name = userModel.firstName.trim() + " " + userModel.lastName.trim();
-        binding.name.setText(name);
+        if (userModel != null){
+            Glide.with(context).load(userModel.image).placeholder(R.drawable.profile_icon).into(binding.profilePic);
+            String name = userModel.firstName.trim() + " " + userModel.lastName.trim();
+            binding.name.setText(name);
+        }
     }
 }

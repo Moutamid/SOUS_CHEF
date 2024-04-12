@@ -23,12 +23,13 @@ public class NotificationReceiver extends BroadcastReceiver {
         notificationHelper = new NotificationHelper(context1);
         context = context1;
         String type = intent.getStringExtra(Constants.NOTIFICATION_TYPE);
-        if (type.equals(Constants.Notification_Type.DAILY.toString())) {
-            sendDailyNotification();
-        } else if (type.equals(Constants.Notification_Type.FIVE_DAY.toString())) {
-             sendFiveDayNotification();
+        if (Stash.getBoolean(Constants.NOTIFICATIONS, true)) {
+            if (type.equals(Constants.Notification_Type.DAILY.toString())) {
+                sendDailyNotification();
+            } else if (type.equals(Constants.Notification_Type.FIVE_DAY.toString())) {
+                sendFiveDayNotification();
+            }
         }
-
     }
 
     private void sendFiveDayNotification() {

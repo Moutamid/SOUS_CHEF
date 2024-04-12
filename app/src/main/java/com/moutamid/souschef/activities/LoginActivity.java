@@ -48,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
                                 Constants.dismissDialog();
                                 Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                             });
-                    Constants.dismissDialog();
                 }).addOnFailureListener(e -> {
                     Constants.dismissDialog();
                     Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();

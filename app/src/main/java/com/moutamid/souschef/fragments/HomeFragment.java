@@ -1,10 +1,13 @@
 package com.moutamid.souschef.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -13,11 +16,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.fxn.stash.Stash;
 import com.moutamid.souschef.Constants;
+import com.moutamid.souschef.MainActivity;
 import com.moutamid.souschef.adapters.MealAdapter;
 import com.moutamid.souschef.adapters.WeekMealAdapter;
 import com.moutamid.souschef.databinding.FragmentHomeBinding;
 import com.moutamid.souschef.models.GroceryModel;
 import com.moutamid.souschef.models.MealModel;
+import com.moutamid.souschef.models.UserModel;
 import com.moutamid.souschef.models.WeekMeal;
 
 import java.util.ArrayList;
@@ -44,22 +49,36 @@ public class HomeFragment extends Fragment {
         // Required empty public constructor
     }
 
+    private static final String TAG = "HomeFragment";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(getLayoutInflater(), container, false);
 
         binding.weekRC.setLayoutManager(new LinearLayoutManager(context));
         binding.weekRC.setHasFixedSize(true);
-
+        Log.d(TAG, "onCreateView: " + Constants.auth().getCurrentUser().getUid());
+        Constants.databaseReference().child(Constants.USER).child(Constants.auth().getCurrentUser().getUid())
+                .get().addOnSuccessListener(dataSnapshot -> {
+                    if (dataSnapshot.exists()) {
+                        Log.d(TAG, "onCreateView: Data Fetch");
+                        UserModel userModel = dataSnapshot.getValue(UserModel.class);
+                        Stash.put(Constants.STASH_USER, userModel);
+                    } else {
+                        Log.d(TAG, "onCreateView: NOT");
+                    }
+                });
+//        Stash.clear(Constants.WEEK_MEAL);
+//        Stash.clear(Constants.PANTRY);
+//        Stash.clear(Constants.GROCERY);
         ArrayList<WeekMeal> list = Stash.getArrayList(Constants.WEEK_MEAL, WeekMeal.class);
         if (list.size() == 0) {
-            list.add(new WeekMeal("Monday\t\t\t ", ""));
-            list.add(new WeekMeal("Tuesday\t\t\t ", ""));
-            list.add(new WeekMeal("Wednesday", ""));
-            list.add(new WeekMeal("Thursday\t\t ", ""));
-            list.add(new WeekMeal("Friday\t\t\t\t\t ", ""));
-            list.add(new WeekMeal("Saturday\t\t ", ""));
-            list.add(new WeekMeal("Sunday\t\t\t\t ", ""));
+            list.add(new WeekMeal("Monday\t\t\t ", "", new ArrayList<>()));
+            list.add(new WeekMeal("Tuesday\t\t\t ", "", new ArrayList<>()));
+            list.add(new WeekMeal("Wednesday", "", new ArrayList<>()));
+            list.add(new WeekMeal("Thursday\t\t ", "", new ArrayList<>()));
+            list.add(new WeekMeal("Friday\t\t\t\t\t ", "", new ArrayList<>()));
+            list.add(new WeekMeal("Saturday\t\t ", "", new ArrayList<>()));
+            list.add(new WeekMeal("Sunday\t\t\t\t ", "", new ArrayList<>()));
             Stash.put(Constants.WEEK_MEAL, list);
         }
         WeekMealAdapter adapter = new WeekMealAdapter(context, list, false, null);

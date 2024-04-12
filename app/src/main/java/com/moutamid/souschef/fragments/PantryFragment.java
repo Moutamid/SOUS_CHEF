@@ -167,8 +167,8 @@ public class PantryFragment extends Fragment {
         ingredientsList.setAdapter(productAdapter);
 
         add.setOnClickListener(v -> {
-            String i = ingredient.getEditText().getText().toString();
-            String q = quantity.getEditText().getText().toString();
+            String i = ingredient.getEditText().getText().toString().trim();
+            String q = quantity.getEditText().getText().toString().trim();
             if (!i.isEmpty() && !q.isEmpty()) {
                 ArrayList<GroceryModel> list = Stash.getArrayList(Constants.PANTRY, GroceryModel.class);
                 list.add(new GroceryModel(i, q));

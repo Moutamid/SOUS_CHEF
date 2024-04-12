@@ -14,12 +14,14 @@ public class RestartBootReceiiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(Stash.getLong(Constants.LAST_TIME, System.currentTimeMillis()));
-            NotificationScheduler.scheduleDailyNotification(context, calendar, false);
-            Calendar calendarDaily = Calendar.getInstance();
-            calendar.setTimeInMillis(System.currentTimeMillis());
-            NotificationScheduler.scheduleDailyNotification(context, calendarDaily, true);
+            if (Stash.getBoolean(Constants.NOTIFICATIONS, true)) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(Stash.getLong(Constants.LAST_TIME, System.currentTimeMillis()));
+                NotificationScheduler.scheduleDailyNotification(context, calendar, false);
+                Calendar calendarDaily = Calendar.getInstance();
+                calendar.setTimeInMillis(System.currentTimeMillis());
+                NotificationScheduler.scheduleDailyNotification(context, calendarDaily, true);
+            }
         }
     }
 }
