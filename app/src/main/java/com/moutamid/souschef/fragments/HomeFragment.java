@@ -89,7 +89,7 @@ public class HomeFragment extends Fragment {
             mealList = getMeal();
             Stash.put(Constants.SUGGESTED_MEAL, mealList);
         }
-        binding.mealRC.setLayoutManager(new GridLayoutManager(requireContext(), 2));
+        binding.mealRC.setLayoutManager(new GridLayoutManager(requireContext(), 2, LinearLayoutManager.HORIZONTAL, false));
         binding.mealRC.setHasFixedSize(true);
         MealAdapter mealAdapter = new MealAdapter(context, mealList, null);
         binding.mealRC.setAdapter(mealAdapter);

@@ -107,14 +107,15 @@ public class MealPrepFragment extends Fragment {
                         grocery.quantity = Math.abs(fin) + " " + Constants.getUnit(mergedList, grocery.ingredient);
                         finalList.add(grocery);
                         check = true;
+                    } else if (fin >= 0) {
+                        check = true;
                     }
                 }
             }
-            if (!check){
+            if (!check) {
                 finalList.add(grocery);
             }
         }
-        Toast.makeText(context, "Size " + finalList.size(), Toast.LENGTH_SHORT).show();
         Stash.put(Constants.GROCERY, finalList);
         new Handler().postDelayed(() -> {
             Constants.dismissDialog();
