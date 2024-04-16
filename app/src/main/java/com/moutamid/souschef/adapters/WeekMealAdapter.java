@@ -48,10 +48,10 @@ public class WeekMealAdapter extends RecyclerView.Adapter<WeekMealAdapter.WeakMe
             holder.root.setCardBackgroundColor(context.getColor(R.color.white));
         }
         holder.day.setText(weakMeal.day);
-        String meal = weakMeal.meal.isEmpty() ? (isClickable ? "Select recipe..." : "Plan your meal") : weakMeal.meal;
+        String meal = weakMeal.meal.name.isEmpty() ? (isClickable ? "Select recipe..." : "Plan your meal") : weakMeal.meal.name;
         holder.meal.setText(meal);
         holder.meal.setOnLongClickListener(v -> {
-            if (isClickable && !weakMeal.meal.isEmpty())
+            if (isClickable && !weakMeal.meal.name.isEmpty())
                 weekMealListener.onLongClick(holder.getAdapterPosition());
             return false;
         });

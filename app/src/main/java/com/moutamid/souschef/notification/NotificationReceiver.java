@@ -50,7 +50,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         int adjustedDay = (calendar.get(Calendar.DAY_OF_WEEK) + 5) % 7;
-        if (!list.get(adjustedDay).meal.isEmpty()) {
+        if (!list.get(adjustedDay).meal.name.isEmpty()) {
             String title = "Today's Special : " + list.get(adjustedDay).meal;
             String description = "Hey there! Enjoy the process of making it and savor every bite. Bon appétit!";
             notificationHelper.sendHighPriorityNotification(title, description, MainActivity.class);

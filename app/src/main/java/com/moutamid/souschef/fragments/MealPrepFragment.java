@@ -2,6 +2,7 @@ package com.moutamid.souschef.fragments;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -22,10 +23,12 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.moutamid.souschef.Constants;
 import com.moutamid.souschef.R;
+import com.moutamid.souschef.activities.DetailActivity;
 import com.moutamid.souschef.adapters.WeekMealAdapter;
 import com.moutamid.souschef.databinding.FragmentMealPrepBinding;
 import com.moutamid.souschef.listeners.WeekMealListener;
 import com.moutamid.souschef.models.GroceryModel;
+import com.moutamid.souschef.models.MealModel;
 import com.moutamid.souschef.models.WeekMeal;
 
 import java.util.ArrayList;
@@ -79,8 +82,8 @@ public class MealPrepFragment extends Fragment {
             groceryList = new ArrayList<>();
         }
         for (WeekMeal mo : week) {
-            if (mo.grocery != null)
-                groceryList.addAll(mo.grocery);
+            if (mo.meal != null)
+                groceryList.addAll(mo.meal.ingredients);
         }
 
         Map<String, Double> mergedItems = new LinkedHashMap<>();
@@ -163,7 +166,6 @@ public class MealPrepFragment extends Fragment {
                 });
                 bottomSheetFragment.show(getChildFragmentManager(), bottomSheetFragment.getTag());
             }
-
             @Override
             public void onLongClick(int pos) {
                 showDialog(pos);
@@ -186,6 +188,10 @@ public class MealPrepFragment extends Fragment {
 
         detail.setOnClickListener(v -> {
             dialog.cancel();
+            ArrayList<WeekMeal> list = Stash.getArrayList(Constants.WEEK_MEAL, WeekMeal.class);
+            MealModel meal = list.get(pos).meal;
+            Stash.put(Constants.MEAL, meal);
+            context.startActivity(new Intent(context, DetailActivity.class));
         });
 
         remove.setOnClickListener(v -> {
@@ -197,8 +203,7 @@ public class MealPrepFragment extends Fragment {
                     .setPositiveButton("Yes", (dialog1, which) -> {
                         dialog1.dismiss();
                         ArrayList<WeekMeal> list = Stash.getArrayList(Constants.WEEK_MEAL, WeekMeal.class);
-                        list.get(pos).grocery = new ArrayList<>();
-                        list.get(pos).meal = "";
+                        list.get(pos).meal = new MealModel();
                         Stash.put(Constants.WEEK_MEAL, list);
                         update();
                     })

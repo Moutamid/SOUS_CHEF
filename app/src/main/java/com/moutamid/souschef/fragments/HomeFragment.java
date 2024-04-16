@@ -67,16 +67,16 @@ public class HomeFragment extends Fragment {
                         Log.d(TAG, "onCreateView: NOT");
                     }
                 });
-
+//        Stash.clear(Constants.WEEK_MEAL);
         ArrayList<WeekMeal> list = Stash.getArrayList(Constants.WEEK_MEAL, WeekMeal.class);
         if (list.size() == 0) {
-            list.add(new WeekMeal("Monday\t\t\t ", "", new ArrayList<>()));
-            list.add(new WeekMeal("Tuesday\t\t\t ", "", new ArrayList<>()));
-            list.add(new WeekMeal("Wednesday", "", new ArrayList<>()));
-            list.add(new WeekMeal("Thursday\t\t ", "", new ArrayList<>()));
-            list.add(new WeekMeal("Friday\t\t\t\t\t ", "", new ArrayList<>()));
-            list.add(new WeekMeal("Saturday\t\t ", "", new ArrayList<>()));
-            list.add(new WeekMeal("Sunday\t\t\t\t ", "", new ArrayList<>()));
+            list.add(new WeekMeal("Monday\t\t\t ", new MealModel()));
+            list.add(new WeekMeal("Tuesday\t\t\t ", new MealModel()));
+            list.add(new WeekMeal("Wednesday", new MealModel()));
+            list.add(new WeekMeal("Thursday\t\t ", new MealModel()));
+            list.add(new WeekMeal("Friday\t\t\t\t\t ", new MealModel()));
+            list.add(new WeekMeal("Saturday\t\t ", new MealModel()));
+            list.add(new WeekMeal("Sunday\t\t\t\t ", new MealModel()));
             Stash.put(Constants.WEEK_MEAL, list);
         }
         WeekMealAdapter adapter = new WeekMealAdapter(context, list, false, null);

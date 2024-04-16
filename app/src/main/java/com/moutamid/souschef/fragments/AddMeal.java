@@ -52,15 +52,14 @@ public class AddMeal extends BottomSheetDialogFragment {
             @Override
             public void onClick(MealModel model) {
                 ArrayList<WeekMeal> list = Stash.getArrayList(Constants.WEEK_MEAL, WeekMeal.class);
-                list.get(pos).grocery = model.ingredients;
-                list.get(pos).meal = model.name;
+                list.get(pos).meal = model;
                 Stash.put(Constants.WEEK_MEAL, list);
                 dismiss();
             }
         });
         binding.mealRC.setAdapter(mealAdapter);
         ArrayList<WeekMeal> weekMeals = Stash.getArrayList(Constants.WEEK_MEAL, WeekMeal.class);
-        if (weekMeals.get(pos).meal.isEmpty()){
+        if (weekMeals.get(pos).meal.name.isEmpty()){
             binding.delete.setVisibility(View.GONE);
         }
 
@@ -72,8 +71,7 @@ public class AddMeal extends BottomSheetDialogFragment {
                     .setPositiveButton("Yes", (dialog, which) -> {
                         dialog.dismiss();
                         ArrayList<WeekMeal> list = Stash.getArrayList(Constants.WEEK_MEAL, WeekMeal.class);
-                        list.get(pos).grocery = new ArrayList<>();
-                        list.get(pos).meal = "";
+                        list.get(pos).meal = new MealModel();
                         Stash.put(Constants.WEEK_MEAL, list);
                         dismiss();
                     })
