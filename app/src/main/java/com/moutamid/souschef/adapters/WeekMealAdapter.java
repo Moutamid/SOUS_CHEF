@@ -9,7 +9,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fxn.stash.Stash;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.moutamid.souschef.Constants;
 import com.moutamid.souschef.R;
 import com.moutamid.souschef.listeners.WeekMealListener;
 import com.moutamid.souschef.models.WeekMeal;
@@ -47,6 +50,11 @@ public class WeekMealAdapter extends RecyclerView.Adapter<WeekMealAdapter.WeakMe
         holder.day.setText(weakMeal.day);
         String meal = weakMeal.meal.isEmpty() ? (isClickable ? "Select recipe..." : "Plan your meal") : weakMeal.meal;
         holder.meal.setText(meal);
+        holder.meal.setOnLongClickListener(v -> {
+            if (isClickable && !weakMeal.meal.isEmpty())
+                weekMealListener.onLongClick(holder.getAdapterPosition());
+            return false;
+        });
         holder.meal.setOnClickListener(v -> {
             if (isClickable)
                 weekMealListener.onClick(list.get(holder.getAdapterPosition()), holder.getAdapterPosition());

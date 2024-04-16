@@ -67,9 +67,7 @@ public class HomeFragment extends Fragment {
                         Log.d(TAG, "onCreateView: NOT");
                     }
                 });
-//        Stash.clear(Constants.WEEK_MEAL);
-//        Stash.clear(Constants.PANTRY);
-//        Stash.clear(Constants.GROCERY);
+
         ArrayList<WeekMeal> list = Stash.getArrayList(Constants.WEEK_MEAL, WeekMeal.class);
         if (list.size() == 0) {
             list.add(new WeekMeal("Monday\t\t\t ", "", new ArrayList<>()));
@@ -83,7 +81,7 @@ public class HomeFragment extends Fragment {
         }
         WeekMealAdapter adapter = new WeekMealAdapter(context, list, false, null);
         binding.weekRC.setAdapter(adapter);
-//        Stash.clear(Constants.SUGGESTED_MEAL);
+        Stash.clear(Constants.SUGGESTED_MEAL);
         ArrayList<MealModel> mealList = Stash.getArrayList(Constants.SUGGESTED_MEAL, MealModel.class);
         if (mealList.size() == 0) {
             mealList = getMeal();
@@ -117,6 +115,9 @@ public class HomeFragment extends Fragment {
         bologneseIngredients.add(new GroceryModel("Italian seasoning", "1 tablespoon"));
         bologneseIngredients.add(new GroceryModel("Parmesan cheese (optional for topping)", " 2 oz"));
         bologneseModel.ingredients = bologneseIngredients;
+        bologneseModel.serving = "4-6 people"; // Number of person for example "2 Person"
+        bologneseModel.preparation_time = "45 minutes to 1 hour"; // time to cook for example "30 mint"
+
         mealList.add(bologneseModel);
 
 // 2. Chicken Stir-Fry
@@ -133,6 +134,8 @@ public class HomeFragment extends Fragment {
         chickenStirFryIngredients.add(new GroceryModel("Olive oil or sesame oil", "1 tablespoon"));
         chickenStirFryIngredients.add(new GroceryModel("Cornstarch", "1 tablespoon"));
         chickenStirFry.ingredients = chickenStirFryIngredients;
+        chickenStirFry.serving = "2-3 people"; // Number of person for example "2 Person"
+        chickenStirFry.preparation_time = "20-30 minutes"; // time to cook for example "30 mint"
         mealList.add(chickenStirFry);
 
 // 3. Baked Salmon
@@ -151,6 +154,8 @@ public class HomeFragment extends Fragment {
         bakedSalmonIngredients.add(new GroceryModel("Honey", "1 tablespoons"));
         bakedSalmonIngredients.add(new GroceryModel("Asparagus", "1"));
         bakedSalmon.ingredients = bakedSalmonIngredients;
+        bakedSalmon.serving = "2-4 people"; // Number of person for example "2 Person"
+        bakedSalmon.preparation_time = "20-30 minutes"; // time to cook for example "30 mint"
         mealList.add(bakedSalmon);
 
         MealModel chiliModel = new MealModel();
@@ -175,6 +180,8 @@ public class HomeFragment extends Fragment {
         chiliIngredients.add(new GroceryModel("Avocado", "1"));
         chiliIngredients.add(new GroceryModel("Sour cream", "1"));
         chiliModel.ingredients = chiliIngredients;
+        chiliModel.serving = "4-6 people"; // Number of person for example "2 Person"
+        chiliModel.preparation_time = "30-45 minutes"; // time to cook for example "30 mint"
         mealList.add(chiliModel);
 
         MealModel tacoModel = new MealModel();
@@ -193,6 +200,8 @@ public class HomeFragment extends Fragment {
         tacoIngredients.add(new GroceryModel("Sour cream", "1"));
         tacoIngredients.add(new GroceryModel("Avocado", "1"));
         tacoModel.ingredients = tacoIngredients;
+        tacoModel.serving = "2-3 people"; // Number of person for example "2 Person"
+        tacoModel.preparation_time = "30-45 minutes"; // time to cook for example "30 mint"
         mealList.add(tacoModel);
 
         MealModel stirFryModel = new MealModel();
@@ -210,6 +219,8 @@ public class HomeFragment extends Fragment {
         stirFryIngredients.add(new GroceryModel("Cooked chicken", "2 cups"));
         stirFryIngredients.add(new GroceryModel("Rice", "1 cup"));
         stirFryModel.ingredients = stirFryIngredients;
+        stirFryModel.serving = "3-4 people"; // Number of person for example "2 Person"
+        stirFryModel.preparation_time = "25-35 minutes"; // time to cook for example "30 mint"
         mealList.add(stirFryModel);
 
         return mealList;

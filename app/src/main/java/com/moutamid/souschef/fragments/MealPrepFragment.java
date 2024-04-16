@@ -1,11 +1,16 @@
 package com.moutamid.souschef.fragments;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -13,9 +18,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.fxn.stash.Stash;
+import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.moutamid.souschef.Constants;
+import com.moutamid.souschef.R;
 import com.moutamid.souschef.adapters.WeekMealAdapter;
 import com.moutamid.souschef.databinding.FragmentMealPrepBinding;
+import com.moutamid.souschef.listeners.WeekMealListener;
 import com.moutamid.souschef.models.GroceryModel;
 import com.moutamid.souschef.models.WeekMeal;
 
@@ -145,13 +154,61 @@ public class MealPrepFragment extends Fragment {
 
     private void update() {
         ArrayList<WeekMeal> list = Stash.getArrayList(Constants.WEEK_MEAL, WeekMeal.class);
-        WeekMealAdapter adapter = new WeekMealAdapter(context, list, true, (model, pos) -> {
-            AddMeal bottomSheetFragment = new AddMeal(model, pos);
-            bottomSheetFragment.setListener(() -> {
-                update();
-            });
-            bottomSheetFragment.show(getChildFragmentManager(), bottomSheetFragment.getTag());
+        WeekMealAdapter adapter = new WeekMealAdapter(context, list, true, new WeekMealListener() {
+            @Override
+            public void onClick(WeekMeal model, int pos) {
+                AddMeal bottomSheetFragment = new AddMeal(model, pos);
+                bottomSheetFragment.setListener(() -> {
+                    update();
+                });
+                bottomSheetFragment.show(getChildFragmentManager(), bottomSheetFragment.getTag());
+            }
+
+            @Override
+            public void onLongClick(int pos) {
+                showDialog(pos);
+            }
         });
         binding.weekRC.setAdapter(adapter);
+    }
+    private void showDialog(int pos) {
+        Dialog dialog = new Dialog(requireContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.bs_options);
+
+        MaterialCardView detail = dialog.findViewById(R.id.detail);
+        MaterialCardView remove = dialog.findViewById(R.id.remove);
+        MaterialCardView cancel = dialog.findViewById(R.id.back);
+
+        cancel.setOnClickListener(v -> {
+            dialog.cancel();
+        });
+
+        detail.setOnClickListener(v -> {
+            dialog.cancel();
+        });
+
+        remove.setOnClickListener(v -> {
+            dialog.cancel();
+            new MaterialAlertDialogBuilder(context)
+                    .setTitle("Remove Meal from Week")
+                    .setMessage("Are you sure you want to remove current meal from week?")
+                    .setNegativeButton("No", (dialog1, which) -> dialog1.dismiss())
+                    .setPositiveButton("Yes", (dialog1, which) -> {
+                        dialog1.dismiss();
+                        ArrayList<WeekMeal> list = Stash.getArrayList(Constants.WEEK_MEAL, WeekMeal.class);
+                        list.get(pos).grocery = new ArrayList<>();
+                        list.get(pos).meal = "";
+                        Stash.put(Constants.WEEK_MEAL, list);
+                        update();
+                    })
+                    .show();
+        });
+
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.BottomSheetAnim;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
 }

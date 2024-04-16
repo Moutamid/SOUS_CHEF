@@ -43,7 +43,7 @@ public class PantryAdapter extends RecyclerView.Adapter<PantryAdapter.PantryVH> 
         holder.itemView.setOnClickListener(v->{}); // important for item selection highlight UI side
 
         holder.itemView.setOnLongClickListener(v -> {
-            pantryClick.onClick(model, holder.getAdapterPosition());
+            if (pantryClick!=null) pantryClick.onClick(model, holder.getAdapterPosition());
             return false;
         });
 

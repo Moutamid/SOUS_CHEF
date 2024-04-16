@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import com.fxn.stash.Stash;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.moutamid.souschef.Constants;
 import com.moutamid.souschef.adapters.MealAdapter;
 import com.moutamid.souschef.databinding.AddMealBinding;
@@ -58,6 +59,26 @@ public class AddMeal extends BottomSheetDialogFragment {
             }
         });
         binding.mealRC.setAdapter(mealAdapter);
+        ArrayList<WeekMeal> weekMeals = Stash.getArrayList(Constants.WEEK_MEAL, WeekMeal.class);
+        if (weekMeals.get(pos).meal.isEmpty()){
+            binding.delete.setVisibility(View.GONE);
+        }
+
+        binding.delete.setOnClickListener(v -> {
+            new MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Remove Meal from Week")
+                    .setMessage("Are you sure you want to remove current meal from week?")
+                    .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        dialog.dismiss();
+                        ArrayList<WeekMeal> list = Stash.getArrayList(Constants.WEEK_MEAL, WeekMeal.class);
+                        list.get(pos).grocery = new ArrayList<>();
+                        list.get(pos).meal = "";
+                        Stash.put(Constants.WEEK_MEAL, list);
+                        dismiss();
+                    })
+                    .show();
+        });
 
         binding.ingredient.getEditText().addTextChangedListener(new TextWatcher() {
             @Override

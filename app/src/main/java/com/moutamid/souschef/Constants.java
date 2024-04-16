@@ -34,6 +34,7 @@ public class Constants {
     static Dialog dialog;
     public static final int HOUR = 8;
     public static final String USER = "USER";
+    public static final String MEAL = "MEAL";
     public static final String NOTIFICATIONS = "NOTIFICATIONS";
     public static final String STASH_USER = "STASH_USER";
     public static final String WEEK_MEAL = "WEEK_MEAL";

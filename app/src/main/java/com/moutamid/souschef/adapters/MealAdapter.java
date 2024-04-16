@@ -1,19 +1,22 @@
 package com.moutamid.souschef.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.fxn.stash.Stash;
+import com.moutamid.souschef.Constants;
 import com.moutamid.souschef.R;
+import com.moutamid.souschef.activities.DetailActivity;
 import com.moutamid.souschef.listeners.MealListener;
 import com.moutamid.souschef.models.MealModel;
 
@@ -21,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class MealAdapter extends RecyclerView.Adapter<MealAdapter.PantryVH> implements Filterable {
+    private static final int SELECT_MEAL = 1;
     Context context;
     ArrayList<MealModel> list;
     ArrayList<MealModel> allList;
@@ -36,7 +40,11 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.PantryVH> impl
     @NonNull
     @Override
     public PantryVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new PantryVH(LayoutInflater.from(context).inflate(R.layout.meal_item, parent, false));
+        if (viewType == SELECT_MEAL) {
+            return new PantryVH(LayoutInflater.from(context).inflate(R.layout.meal_item_2, parent, false));
+        } else {
+            return new PantryVH(LayoutInflater.from(context).inflate(R.layout.meal_item, parent, false));
+        }
     }
 
     @Override
@@ -46,8 +54,16 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.PantryVH> impl
         holder.itemView.setOnClickListener(v -> {
             if (mealListener != null) {
                 mealListener.onClick(model);
+            } else {
+                Stash.put(Constants.MEAL, model);
+                context.startActivity(new Intent(context, DetailActivity.class));
             }
         });
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return mealListener != null ? SELECT_MEAL : 0;
     }
 
     @Override
