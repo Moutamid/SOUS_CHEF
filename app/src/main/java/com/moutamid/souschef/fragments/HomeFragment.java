@@ -68,6 +68,8 @@ public class HomeFragment extends Fragment {
                     }
                 });
 //        Stash.clear(Constants.WEEK_MEAL);
+        Stash.clear(Constants.PANTRY);
+//        Stash.clear(Constants.GROCERY);
         ArrayList<WeekMeal> list = Stash.getArrayList(Constants.WEEK_MEAL, WeekMeal.class);
         if (list.size() == 0) {
             list.add(new WeekMeal("Monday\t\t\t ", new MealModel()));
@@ -81,7 +83,7 @@ public class HomeFragment extends Fragment {
         }
         WeekMealAdapter adapter = new WeekMealAdapter(context, list, false, null);
         binding.weekRC.setAdapter(adapter);
-        Stash.clear(Constants.SUGGESTED_MEAL);
+//        Stash.clear(Constants.SUGGESTED_MEAL);
         ArrayList<MealModel> mealList = Stash.getArrayList(Constants.SUGGESTED_MEAL, MealModel.class);
         if (mealList.size() == 0) {
             mealList = getMeal();

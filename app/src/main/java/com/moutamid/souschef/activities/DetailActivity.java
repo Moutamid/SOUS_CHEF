@@ -64,7 +64,6 @@ public class DetailActivity extends AppCompatActivity {
         for (Map.Entry<String, Double> entry : mergedItems.entrySet()) {
             finalList.add(new GroceryModel(entry.getKey(), entry.getValue() + " " + Constants.getUnit(list, entry.getKey())));
         }
-        Stash.put(Constants.PANTRY, finalList);
         PantryAdapter adapter = new PantryAdapter(this, finalList, null);
         binding.pantryRC.setAdapter(adapter);
     }
