@@ -324,6 +324,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445765053911:android:aae7d777d2200ca395af92",
+        "android_client_info": {
+          "package_name": "com.nathan.souschef"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "445765053911-db684sdt4lqvbde6h8rdplser2tu0k2v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_sd758EZZxVITvxZIxVSa-BtbSB4Tr5I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "445765053911-db684sdt4lqvbde6h8rdplser2tu0k2v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

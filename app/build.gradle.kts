@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.moutamid.souschef"
+    namespace = "com.nathan.souschef"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.moutamid.souschef"
+        applicationId = "com.nathan.souschef"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
